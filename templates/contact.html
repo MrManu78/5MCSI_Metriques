@@ -1,28 +1,31 @@
-<div class="section">
-    <div class="main-container">
-      <div class="w-layout-grid grid-halves">
-        <div class="container">
-          <h4 class="medium-heading">Me Contacter</h4>
-          <div data-w-id="4185dae2-05b9-d055-1354-d393d279c582" style="-webkit-transform:translate3d(0, 28PX, 0) scale3d(1, 1, 1) rotateX(-10DEG) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 28PX, 0) scale3d(1, 1, 1) rotateX(-10DEG) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 28PX, 0) scale3d(1, 1, 1) rotateX(-10DEG) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 28PX, 0) scale3d(1, 1, 1) rotateX(-10DEG) rotateY(0) rotateZ(0) skew(0, 0);transform-style:preserve-3d;opacity:0" class="avatar-content below-content"><img src="../../images/avatar-06.jpg" alt="" class="avatar">
-            <div class="adjacent-to-avatar">
-              <h5 class="no-bottom-margin">Jonathan Simpson</h5>
-              <div>New Accounts</div>
-              <a href="#"><span class="__cf_email__" data-cfemail="8ae0e5e4ebfee2ebe4caf3ffedefe3e4e9a4e9e5">[email&#160;protected]</span></a>
-            </div>
-          </div>
-        </div>
-        <div class="container-large align-center">
-          <div class="form-block w-form">
-            <form id="wf-form-Contact-Form" name="wf-form-Contact-Form" data-name="Contact Form" method="get" class="form-grid-vertical" data-wf-page-id="5fbd42234e865cc5209cdbc0" data-wf-element-id="074c4436-2e60-28fe-8c56-e651ac15d030">
-              <div class="w-layout-grid form-grid-halves">
-                <div class="labelled-input"><label for="Contact-Name" class="field-label">Name</label><input type="text" class="form-input w-input" maxlength="256" name="Contact-Name" data-name="Contact Name" placeholder="" id="Contact-Name"></div>
-                <div class="labelled-input"><label for="Contact-Phone" class="field-label">Phone (Optional)</label><input type="tel" class="form-input w-input" maxlength="256" name="Contact-Phone" data-name="Contact Phone" placeholder="" id="Contact-Phone"></div>
-              </div>
-              <div class="labelled-input"><label for="Contact-Email" class="field-label">Email Address</label><input type="email" class="form-input w-input" maxlength="256" name="Contact-Email" data-name="Contact Email" placeholder="" id="Contact-Email"></div>
-              <div class="labelled-input"><label for="Contact-Email-2" class="field-label">Message</label><textarea data-name="Contact Text" maxlength="5000" id="Contact-Text" name="Contact-Text" placeholder="" class="form-input textarea w-input"></textarea></div><input type="submit" value="Send Message" data-wait="Please wait..." id="w-node-_074c4436-2e60-28fe-8c56-e651ac15d037-209cdbc0" class="button w-button">
-            </form>
-          </div>
-        </div>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Me Contacter</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="container">
+    <h2>Me contacter</h2>
+    <form action="envoi.php" method="post">
+      <div class="form-group">
+        <label for="nom">Nom:</label>
+        <input type="text" id="nom" name="nom" required>
       </div>
-    </div>
+      <div class="form-group">
+        <label for="prenom">Prénom:</label>
+        <input type="text" id="prenom" name="prenom" required>
+      </div>
+      <div class="form-group">
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+      </div>
+      <button type="submit">Envoyer</button>
+    </form>
   </div>
+
+</body>
+</html>
