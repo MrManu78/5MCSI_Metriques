@@ -10,9 +10,11 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
     return render_template('hello.html')
+  
 @app.route("/contact/")
 def MaPremiereAPI():
     return  render_template('contact.html')
+  
 @app.route('/tawarano/')
 def meteo():
     response = urlopen('https://samples.openweathermap.org/data/2.5/forecast?lat=0&lon=0&appid=xxx')
@@ -32,9 +34,16 @@ def mongraphique():
 @app.route("/histogramme/")
 def histogramme():
     return render_template("histogramme.html")
+  
 @app.route("/commits/")
 def commits():
     return render_template("commits.html")
+  
+@app.route('/extract-minutes/<date_string>')
+def extract_minutes(date_string):
+        date_object = datetime.strptime(date_string, '%Y-%m-%dT%H:%M:%SZ')
+        minutes = date_object.minute
+        return jsonify({'minutes': minutes})
   
 if __name__ == "__main__":
   app.run(debug=True)
