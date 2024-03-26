@@ -20,12 +20,11 @@
           dataTable.addRow([date.toLocaleDateString(), entry.temp]);
         });
 
-        // Configurer les options du graphique en colonne
         var options = {
           title: 'Évolution des températures de la ville de Tawarano',
           legend: { position: 'none' },
           colors: ['#e7711c'],
-          vAxis: { title: 'Température (°C)' },
+          vAxis: { title: 'Température °C' },
           hAxis: { title: 'Jour' }
         };
 
