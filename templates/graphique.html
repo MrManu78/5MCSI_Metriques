@@ -1,39 +1,74 @@
- <head>
-    <meta charset="UTF-8" />
-    <title>Metrique</title>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  </head>
-  <body>
-    <div id="chart_div"></div>
-    <script>
-      google.charts.load('current', { packages: ['corechart'] });
-      google.charts.setOnLoadCallback(drawBackgroundColor);
-     function drawBackgroundColor() {
-    function drawChart(data) {
-    // Convertir les données récupérées en un tableau utilisable par Google Charts
-    var dataTable = new google.visualization.DataTable();
-    dataTable.addColumn('string', 'Date');
-    dataTable.addColumn('number', 'Valeur');
-    data.results.forEach(entry => {
-      var date = new Date(entry.Jour * 1000);
-      dataTable.addRow([date.toLocaleDateString(), entry.temp]);
-    });
-    // Configurer les options du graphique en ligne
-    var options = {
-      title: 'Évolution des températures de la ville de Tawarano',
-      curveType: 'function',
-      legend: { position: 'bottom' }
-    };
-    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-    chart.draw(dataTable, options);
-  }
-  // Récupération de données depuis notre API /tawarano/
-  fetch('/tawarano/')
-    .then(response => response.json())
-    .then(data => {
-      drawChart(data);
-    })
-}
-    </script>
-  </body>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graphique des commits par minute</title>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+  <div id="chart_div" style="width: 100%; height: 500px;"></div>
+
+  <script>
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      // Récupération des données des commits depuis GitHub
+      fetch('https://api.github.com/repos/MrManu78/5MCSI_Metriques/commits')
+        .then(response => response.json())
+        .then(data => {
+          var commitData = parseCommitData(data);
+          drawGraph(commitData);
+        })
+        .catch(error => {
+          console.error('Erreur lors de la récupération des données des commits:', error);
+        });
+
+      // Fonction pour analyser les données des commits
+      function parseCommitData(data) {
+        var commitCounts = {};
+        data.forEach(commit => {
+          var commitDate = commit.commit.author.date;
+          fetch(`/extract-minutes/${commitDate}`)
+            .then(response => response.json())
+            .then(data => {
+              var minuteKey = data.minutes;
+              commitCounts[minuteKey] = (commitCounts[minuteKey] || 0) + 1;
+              drawGraph(Object.entries(commitCounts));
+            })
+            .catch(error => {
+              console.error('Erreur lors de l\'extraction des minutes:', error);
+            });
+        });
+      }
+
+      // Fonction pour dessiner le graphique
+      function drawGraph(commitData) {
+        var data = new google.visualization.DataTable();
+        data.addColumn('number', 'Minutes');
+        data.addColumn('number', 'Nombre de commits');
+
+        commitData.forEach(commit => {
+          data.addRow([parseInt(commit[0]), commit[1]]);
+        });
+
+        var options = {
+          title: 'Nombre de commits par minute',
+          legend: { position: 'none' },
+          colors: ['#007bff'],
+          hAxis: {
+            title: 'Minutes'
+          },
+          vAxis: {
+            title: 'Nombre de commits'
+          }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    }
+  </script>
+</body>
 </html>
